@@ -3,12 +3,13 @@
 /**
  * Class-LikesAkaKarma.php
  *
- * @package Likes Aka Karma
+ * @package Likes aka Karma
  * @link https://dragomano.ru/mods/likes-aka-karma
  * @author Bugo <bugo@dragomano.ru>
- * @copyright 2018-2019 Bugo
+ * @copyright 2018-2020 Bugo
+ * @license https://opensource.org/licenses/MIT The MIT License
  *
- * @version 0.2
+ * @version 0.3
  */
 
 if (!defined('SMF'))
@@ -23,7 +24,8 @@ class LikesAkaKarma
 	 */
 	public static function hooks()
 	{
-		add_integration_function('integrate_issue_like_before', 'LikesAkaKarma::likesToKarma', false);
+		add_integration_function('integrate_issue_like_before', 'LikesAkaKarma::likesToKarma', false, __FILE__);
+		add_integration_function('integrate_credits', 'LikesAkaKarma::credits', false, __FILE__);
 	}
 
 	/**
@@ -112,5 +114,17 @@ class LikesAkaKarma
 			),
 			array('id_member', 'id_theme', 'variable')
 		);
+	}
+
+	/**
+	 * Добавляем информацию об авторских правах на страницу action=credits
+	 *
+	 * @return void
+	 */
+	public static function credits()
+	{
+		global $context;
+
+		$context['credits_modifications'][] = '<a href="https://dragomano.ru/mods/likes-aka-karma" target="_blank" rel="noopener">Likes aka Karma</a> &copy; 2018&ndash;2020, Bugo';
 	}
 }
